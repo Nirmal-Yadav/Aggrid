@@ -1,7 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
-// import "ag-grid-community/styles/ag-grid.css";
 import "/Users/nirmalyadav/Documents/react/Aggrid/aggrid/src/pages/aggrid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { initialData } from "./rowData";
