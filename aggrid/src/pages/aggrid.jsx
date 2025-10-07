@@ -1,15 +1,19 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
-import "ag-grid-community/styles/ag-grid.css";
+import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
+// import "ag-grid-community/styles/ag-grid.css";
 import "/Users/nirmalyadav/Documents/react/Aggrid/aggrid/src/pages/aggrid.css";
-// import { initialData } from "./rowData";
+import "ag-grid-community/styles/ag-theme-quartz.css";
+import { initialData } from "./rowData";
 import { columnDefs } from "./columnData";
 
 function Aggrid() {
+  ModuleRegistry.registerModules([AllCommunityModule]);
+
   const gridRef = useRef(null);
 
-  //   const [rowData, setRowData] = useState(initialData);
-  //   const [nextId, setNextId] = useState(21);
+  const [rowData, setRowData] = useState(initialData);
+  const [nextId, setNextId] = useState(21);
 
   const defaultColDef = {
     resizable: true,
@@ -32,7 +36,7 @@ function Aggrid() {
       <section className="grid-container">
         <AgGridReact
           ref={gridRef}
-          //   rowData={rowData}
+          rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
         />

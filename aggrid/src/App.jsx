@@ -1,9 +1,14 @@
 import React from "react";
 
 import "./App.css";
+import Aggrid from "./pages/aggrid";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <Aggrid />
+    </>
+  );
 }
 
 export default App;

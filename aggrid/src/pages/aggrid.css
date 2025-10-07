@@ -19,7 +19,8 @@
 .grid-container {
   height: 70vh;
   width: 100%;
-  background-color: #1e1e1e;
+  /* background-color: #1e1e1e; */
+  border: 2px solid black;
   border-radius: 8px;
   overflow: hidden;
 }
