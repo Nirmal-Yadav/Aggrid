@@ -14,6 +14,7 @@ function Aggrid() {
 
   const [rowData, setRowData] = useState(initialData);
   const [nextId, setNextId] = useState(21);
+  const [gridApi, setGridApi] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -73,11 +74,25 @@ function Aggrid() {
     );
   }, []);
 
+  const onQuickFilter = (e) => {
+    if (gridApi) {
+      gridApi.setGridOption("quickFilterText", e.target.value);
+    }
+  };
+
+  const onGridReady = (params) => {
+    setGridApi(params.api);
+  };
+
   return (
     <div className="root">
       <header className="header">
         <div className="controls">
-          <input className="search" placeholder="Search..." />
+          <input
+            className="search"
+            onChange={onQuickFilter}
+            placeholder="Search..."
+          />
           <form className="add-form" onSubmit={handleAdd}>
             <input
               name="name"
@@ -135,6 +150,7 @@ function Aggrid() {
           animateRows={true}
           onCellValueChanged={onCellValueChanged}
           rowSelection={{ mode: "multiRow" }}
+          onGridReady={onGridReady}
           rowSelectionOptions={{ clickSelection: "checkboxOnly" }}
         />
       </section>
