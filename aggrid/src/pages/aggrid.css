@@ -12,9 +12,15 @@
 .controls {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
 }
 .add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-form div {
   display: flex;
   flex-direction: row;
   gap: 10px;

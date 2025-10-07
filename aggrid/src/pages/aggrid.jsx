@@ -11,15 +11,18 @@ function Aggrid() {
 
   const gridRef = useRef(null);
 
-  const [rowData, setRowData] = useState(initialData);
-  const [nextId, setNextId] = useState(21);
   const [gridApi, setGridApi] = useState(null);
+  const [rowData, setRowData] = useState(initialData.employees);
+  const [nextId, setNextId] = useState(initialData.employees.length + 1);
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
-    role: "",
+    department: "",
+    position: "",
+    salary: "",
+    location: "",
     status: "active",
-    revenue: "",
   });
 
   const defaultColDef = {
@@ -36,24 +39,27 @@ function Aggrid() {
 
   const handleAdd = (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email)
-      return alert("Name and Email are required");
+    if (!formData.firstName || !formData.lastName || !formData.email) {
+      return alert("First Name, Last Name, and Email are required.");
+    }
 
-    const newRow = {
+    const newEmployee = {
       id: nextId,
       ...formData,
-      lastLogin: new Date().toISOString().slice(0, 10),
-      revenue: Number(formData.revenue) || 0,
+      salary: Number(formData.salary) || 0,
     };
 
-    setRowData((prev) => [newRow, ...prev]);
+    setRowData((prev) => [newEmployee, ...prev]);
     setNextId((prev) => prev + 1);
     setFormData({
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
-      role: "",
+      department: "",
+      position: "",
+      salary: "",
+      location: "",
       status: "active",
-      revenue: "",
     });
   };
 
@@ -93,47 +99,68 @@ function Aggrid() {
             placeholder="Search..."
           />
           <form className="add-form" onSubmit={handleAdd}>
-            <input
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-            <input
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-            <input
-              name="role"
-              placeholder="Role"
-              value={formData.role}
-              onChange={handleChange}
-            />
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-            >
-              <option value="active">Active</option>
-              <option value="paused">Paused</option>
-            </select>
-            <input
-              name="revenue"
-              placeholder="Revenue"
-              type="number"
-              value={formData.revenue}
-              onChange={handleChange}
-            />
-            <button type="submit" onClick={handleAdd}>
-              Add
-            </button>
-            <button type="button" onClick={handleDelete}>
-              Delete Selected
-            </button>
+            <div>
+              <input
+                name="firstName"
+                placeholder="First Name"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+              />
+              <input
+                name="lastName"
+                placeholder="Last Name"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+              />
+              <input
+                name="email"
+                placeholder="Email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              <input
+                name="department"
+                placeholder="Department"
+                value={formData.department}
+                onChange={handleChange}
+              />
+              <input
+                name="position"
+                placeholder="Position"
+                value={formData.position}
+                onChange={handleChange}
+              />
+              <input
+                name="salary"
+                type="number"
+                placeholder="Salary"
+                value={formData.salary}
+                onChange={handleChange}
+              />
+              <input
+                name="location"
+                placeholder="Location"
+                value={formData.location}
+                onChange={handleChange}
+              />
+              <select
+                name="status"
+                value={formData.status}
+                onChange={handleChange}
+              >
+                <option value="active">Active</option>
+                <option value="paused">Paused</option>
+              </select>
+            </div>
+            <div>
+              <button type="submit">Add Employee</button>
+              <button type="button" onClick={handleDelete}>
+                Delete Selected
+              </button>
+            </div>
           </form>
         </div>
       </header>
