@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { ModuleRegistry, AllCommunityModule } from "ag-grid-community";
 // import "ag-grid-community/styles/ag-grid.css";
@@ -57,6 +57,22 @@ function Aggrid() {
     });
   };
 
+  const handleDelete = () => {
+    const selected = gridRef.current.api.getSelectedRows();
+    if (!selected || selected.length === 0)
+      return alert("Select rows to delete.");
+    const ids = new Set(selected.map((r) => r.id));
+    setRowData((prev) => prev.filter((r) => !ids.has(r.id)));
+    gridRef.current.api.deselectAll();
+  };
+
+  const onCellValueChanged = useCallback((params) => {
+    const updated = params.data;
+    setRowData((prev) =>
+      prev.map((r) => (r.id === updated.id ? { ...updated } : r))
+    );
+  }, []);
+
   return (
     <div className="root">
       <header className="header">
@@ -98,8 +114,12 @@ function Aggrid() {
               value={formData.revenue}
               onChange={handleChange}
             />
-            <button type="submit">Add</button>
-            <button type="button">Delete Selected</button>
+            <button type="submit" onClick={handleAdd}>
+              Add
+            </button>
+            <button type="button" onClick={handleDelete}>
+              Delete Selected
+            </button>
           </form>
         </div>
       </header>
@@ -110,6 +130,12 @@ function Aggrid() {
           rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
+          pagination={true}
+          paginationPageSize={10}
+          animateRows={true}
+          onCellValueChanged={onCellValueChanged}
+          rowSelection={{ mode: "multiRow" }}
+          rowSelectionOptions={{ clickSelection: "checkboxOnly" }}
         />
       </section>
     </div>

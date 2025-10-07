@@ -27,7 +27,7 @@ export const columnDefs = [
   {
     headerName: "Role",
     field: "role",
-    width: 140,
+    width: 200,
     editable: true,
     sortable: true,
     filter: true,
